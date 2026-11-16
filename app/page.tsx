@@ -150,9 +150,11 @@ export default async function Feed({ searchParams }: { searchParams: Promise<Rec
                 </div>
               )}
               <div className="actions">
-                {p.permalink && (
+                {p.permalink ? (
                   <a href={p.permalink} target="_blank" rel="noreferrer" className="btn ghost">Buka di Threads ↗</a>
-                )}
+                ) : p.id.startsWith("mock-") ? (
+                  <span className="btn ghost" aria-disabled title="Data contoh tidak punya post asli">Data contoh</span>
+                ) : null}
                 <StatusButton p={p} status={p.status === "saved" ? "new" : "saved"} label={p.status === "saved" ? "★ Disimpan" : "☆ Simpan"} />
                 <StatusButton p={p} status={p.status === "hidden" ? "new" : "hidden"} label={p.status === "hidden" ? "Kembalikan" : "Buang"} />
               </div>

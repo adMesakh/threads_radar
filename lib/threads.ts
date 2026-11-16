@@ -95,7 +95,7 @@ function mockPosts(k: Keyword): ThreadsPost[] {
     id: `mock-${k.id}-${Math.floor(now / 3600_000)}-${i}`,
     text,
     media_type: "TEXT_POST",
-    permalink: "https://www.threads.net/",
+    permalink: undefined, // data contoh tidak punya post asli
     timestamp: new Date(now - i * 2 * 3600_000).toISOString(),
     username: ["rina.dev", "budi_s", "promo.official", "techreview.id", "jualan.jaksel", "andi99"][i],
     is_reply: i === 5,
