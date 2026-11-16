@@ -8,6 +8,7 @@ import { runFetch, reapplyRules, scorePending } from "@/lib/pipeline";
 
 export async function login(_: unknown, form: FormData) {
   const pw = String(form.get("password") ?? "");
+  if (!process.env.APP_PASSWORD) return { error: "APP_PASSWORD belum diisi di Environment Variables Vercel (lalu Redeploy)." };
   if (!passwordMatches(pw)) return { error: "Password salah" };
   await setSession();
   redirect("/");

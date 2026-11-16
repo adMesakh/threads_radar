@@ -4,10 +4,14 @@ import { requireAuth } from "@/lib/auth";
 import { aiEnabled } from "@/lib/curate";
 import { saveKeyword, toggleKeyword, deleteKeyword } from "../actions";
 import { SubmitButton, ConfirmButton } from "../components";
+import { checkSetup } from "@/lib/setup";
+import { SetupScreen } from "../setup-screen";
 
 export const maxDuration = 300;
 
 export default async function KeywordsPage({ searchParams }: { searchParams: Promise<{ edit?: string }> }) {
+  const problems = await checkSetup();
+  if (problems.length) return <SetupScreen problems={problems} />;
   await requireAuth();
   await ensureSchema();
   const sql = db();

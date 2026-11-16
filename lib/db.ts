@@ -1,4 +1,5 @@
 import postgres from "postgres";
+import { databaseUrl } from "./setup";
 
 type Sql = ReturnType<typeof postgres>;
 
@@ -6,7 +7,7 @@ const g = globalThis as unknown as { __sql?: Sql; __schemaReady?: Promise<void> 
 
 export function db(): Sql {
   if (!g.__sql) {
-    const url = process.env.DATABASE_URL;
+    const url = databaseUrl();
     if (!url) throw new Error("DATABASE_URL belum diisi");
     const isLocal = /localhost|127\.0\.0\.1/.test(url);
     g.__sql = postgres(url, {

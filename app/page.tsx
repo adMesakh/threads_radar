@@ -5,6 +5,8 @@ import { aiEnabled } from "@/lib/curate";
 import { refreshNow, setStatus } from "./actions";
 import { SubmitButton } from "./components";
 import type { RunSummary } from "@/lib/pipeline";
+import { checkSetup } from "@/lib/setup";
+import { SetupScreen } from "./setup-screen";
 
 export const maxDuration = 300;
 
@@ -19,6 +21,8 @@ const VIEWS: { id: View; label: string }[] = [
 const fmt = new Intl.DateTimeFormat("id-ID", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Jakarta" });
 
 export default async function Feed({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
+  const problems = await checkSetup();
+  if (problems.length) return <SetupScreen problems={problems} />;
   await requireAuth();
   await ensureSchema();
   const sp = await searchParams;
